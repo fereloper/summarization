@@ -39,8 +39,6 @@ vocab_list = [i.lower() for j in all_text for i in j]
 def indexing(txt):
     """
     The function creates word to index mapping
-    Param:
-        txt: List of Vocab words
     """
     vocab = set(txt)
     vocab_to_idx = {v:k for k, v in enumerate(vocab)}
@@ -83,9 +81,7 @@ glove_weight_matrix = np.empty((n_glove_symbols, n_embeddings))
 print(glove_weight_matrix.shape)
 print(glove_weight_matrix[:10,:10])
 
-
-
-
+# Create glove wight matrix
 c = 0
 glove_index_dict = {}
 global_scale = .1
@@ -109,6 +105,7 @@ print("Scale: ", scale)
 embedding = np.random.uniform(low=-scale, high=scale, size=shape)
 print("Embedding shape...",embedding.shape,"Std...",embedding.std())
 
+
 c = 0
 for i in range(vocab_size):
     w = idx_to_vocab[i]
@@ -127,14 +124,12 @@ for w in vocab_to_idx:
         g = w
         word2glove[w] = g
 
-print("Word to glove lenght: ", len(word2glove))
-
-
 
 normed_embedding = embedding/np.array([np.sqrt(np.dot(gweight,gweight)) for gweight in embedding])[:,None]
 
 nb_unknown_words = 2600
 
+# Check the glove substitute
 glove_match = []
 for w, idx in vocab_to_idx.items():
     if idx >= vocab_size-nb_unknown_words and w.isalpha() and w in word2glove:
